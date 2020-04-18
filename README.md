@@ -7,3 +7,8 @@ A discord bot that writes punchlines in style of a chosen rapper
 give a punchline
 add new rapper at https://genius.com/artists/
 ```
+
+# Requirements
+```
+pip install lyricsgenius, pandas
+```

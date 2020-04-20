@@ -65,10 +65,10 @@ def LoadChains(artist, chainName):
 def SendPunch():
     return GenText(LoadChains(artist, chainName), textLen)
 
-artist = "oxxxymiron"
+artist = "Oxxxymiron"
 chainName = "general"
 textLen = 64
 
-InputText = open("battle-mc/oxxxymiron.txt", "r", encoding="utf8").read()
+InputText = open("battle-mc/Oxxxymiron.txt", "r", encoding="utf8").read()
 
 chains = GenChains(f"{preprocess(InputText)} *END*", 1)

@@ -1,37 +1,92 @@
 import discord
 from discord.ext import commands
 
+import chain as ch
 from my_token import discord_token 
+
+
+# TODO save to file
+EXPLICT = dict() # show explict content
+LANG = dict() # language
+REGISTERED = []
 
 client = discord.Client()
 bot = commands.Bot(command_prefix='vs ')
 
-# messages = await channel.history(limit=123).flatten()
-# print(messages)
-# messages is now a list of Message...
+def test(user_id):
+    return user_id in REGISTERED
+
 
 @bot.event
 async def on_ready():
-    print('Ready!')
+    print('started')
     game = discord.Game("GTA Online")
     await bot.change_presence(status=discord.Status.online, activity=game)
 
-@bot.command(pass_context=True) # разрешаем передавать агрументы
-async def test(ctx, arg): # создаем асинхронную фунцию бота
-    await ctx.send(arg) # отправляем обратно аргумент
+
+@bot.command(pass_context=True)
+async def start(ctx):
+    if ctx.author.id in REGISTERED:
+        await ctx.send('Already registed')
+
+    EXPLICT[ctx.author.id] = True
+    LANG[ctx.author.id] = 'English'
+
+    REGISTERED.append(ctx.author.id)
+    await ctx.send('Registed')
+
+
+
 
 @bot.command(pass_context=True)
 async def punch(ctx):
-    await ctx.send('punch')
+    if test(ctx.author.id):
+        await ctx.send(ch.SendPunch())
+    else:
+        await ctx.send('Please register by typing <vs start>')
+
 
 @bot.command(pass_context=True)
-async def artists(ctx):
-    with open('battle-mc/artists', 'r')
-    await ctx.send('')
+async def rappers(ctx):
+    if test(ctx.author.id):
+        with open('battle-mc/artists.txt', 'r') as f:
+            await ctx.send(f.read())
+    else:
+        await ctx.send('Please register by typing <vs start>')
+
 
 @bot.command(pass_context=True)
-async def add_artists(ctx):
-    with open('battle-mc/artists', 'r')
-    await ctx.send('')
+async def add(ctx):
+    if test(ctx.author.id):
+        with open('battle-mc/artists', 'r'):
+            await ctx.send('')
+    else:
+        await ctx.send('Please register by typing <vs start>')
+
+
+@bot.command(pass_context=True)
+async def explit(ctx):
+    if test(ctx.author.id):
+        await ctx.send('')
+    else:
+        await ctx.send('Please register by typing <vs start>')
+
+
+@bot.command(pass_context=True)
+async def lang(ctx):
+    if test(ctx.author.id):
+        await ctx.send(LANG[ctx.author.id])
+    else:
+        await ctx.send('Please register by typing <vs start>')
+
+
+@bot.command(pass_context=True)
+async def reg(ctx):
+    if test(ctx.author.id):
+        await ctx.send(REGISTERED)
+        return
+    else:
+        await ctx.send('Please register by typing <vs start>')
+
 
 bot.run(discord_token)

@@ -1,23 +1,14 @@
 import discord
+from discord.ext import commands
+
 from my_token import discord_token 
 
-client = discord.Client()
-
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    if (message.content.startswith('!hello'):
-        msg = 'Hello {0.author.mention}'.format(message)
-        await client.send_message(message.channel, msg)
+bot = commands.Bot(command_prefix='vs ')
+activity = discord.Game(name="with the API")
 
 
-@client.event
-async def on_ready():
-    print('Logged in as')
-    print(client.user.name)
-    print(client.user.id)
-    print('--' * 10)
+@bot.command(pass_context=True) # разрешаем передавать агрументы
+async def test(ctx, arg): # создаем асинхронную фунцию бота
+    await ctx.send(arg) # отправляем обратно аргумент
 
-client.run(discord_token)
+bot.run(discord_token)

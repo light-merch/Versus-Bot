@@ -36,6 +36,7 @@ client = discord.Client()
 bot = commands.Bot(command_prefix='vs ')
 
 
+
 @bot.event
 async def on_ready():
     print('Started!')
@@ -70,7 +71,8 @@ async def punch(ctx):
 @bot.command(pass_context=True)
 async def rappers(ctx):
     if test(ctx.author.id):
-        await ctx.send(' '.join(RAPPERS))
+        print(' '.join(RAPPERS))
+        await ctx.send('dfg')
     else:
         await ctx.send('Please register by typing <vs start>')
 
@@ -93,9 +95,9 @@ async def add(ctx, arg):
 @bot.command(pass_context=True)
 async def explict(ctx):
     if test(ctx.author.id):
-        REGISTERED[ctx.author.id]["EXPLICT"] = !REGISTERED[ctx.author.id]["EXPLICT"]
+        REGISTERED[ctx.author.id]["EXPLICT"] = not REGISTERED[ctx.author.id]["EXPLICT"]
         write_users()
-        ans = f'Explict content set to ' + ['show', 'hide'][!REGISTERED[ctx.author.id]["EXPLICT"]]
+        ans = f'Explict content set to ' + ['show', 'hide'][not REGISTERED[ctx.author.id]["EXPLICT"]]
         await ctx.send(ans)
     else:
         await ctx.send('Please register by typing <vs start>')
